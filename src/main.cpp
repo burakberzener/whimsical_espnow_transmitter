@@ -4,20 +4,18 @@
 Tasks:
 */
 
-int distance_front_left, distance_front_right, distance_side_left, distance_side_right, distance_back;
-int rand_number = 0;
-int sensor_checker_status;
-int counter = 0;
-String msg, msg_command;
+ /*Private Variables BEGIN*/
+
+ /*Private Variables END*/
+
+ /*Private Functions Define BEGIN*/
+
+ /*Private Functions Define END*/
 
 espnow_msg_struct espnow_msg;
 
-
 String success;
 esp_now_peer_info_t peerInfo;
-
-int sensor_checker(int wait_time);
-void getSensorDistances();
 
 // callback when data is sent
 void OnDataSent(const uint8_t *mac_addr, esp_now_send_status_t status) {
@@ -176,162 +174,12 @@ void loop() {
     Serial.print("Reading Buffer: "); Serial.println(msg);
     Serial.print("Message Buffer: "); Serial.println(msg_command);
   }
-  /*
-  if(msg_command == "start") {
-    getSensorDistances();
-    rand_number=random(0, 100);
-    if(distance_front_right<=100 && distance_front_left<=100) {
-      if(distance_back>=100) {
-        while(distance_front_right<=80 || distance_front_left<=80) {
-          getSensorDistances();
-          moveMotors(GO_BACKWARD);
-          delay(20);
-        }
-      }
-      else {
-        if(distance_side_left<=80 && distance_side_right<=80) {
-          if(rand_number>20) {
-            moveMotors(TURN_LEFT);
-            delay(200);
-          }
-          else {
-            moveMotors(TURN_RIGHT);
-            delay(200);
-          }
-        }
-      }
-    }
-    else if(distance_front_right<=100) {
-      if(distance_front_left<=100) {
-        getSensorDistances();
-        moveMotors(GO_BACKWARD);
-        delay(100);
-      }
-      if(distance_front_right>=60) {
-        getSensorDistances();
-        moveMotors(GO_BACKWARD);
-        delay(50);
-        moveMotors(ROTATE_ON_LEFT_BWD);
-        delay(50);
-        moveMotors(GO_FORWARD);
-        delay(50);
-        while(distance_side_right<FRONT_TRIG_SIDE_CTRL) {
-          getSensorDistances();
-          moveMotors(GO_FORWARD);
-        }
-      }
-      else {
-        while (distance_front_right<60) {
-          getSensorDistances();
-          moveMotors(ROTATE_ON_LEFT_BWD);
-          delay(100);
-          moveMotors(GO_BACKWARD);
-          delay(100);
-        }
-      }
-    }
-    else if(distance_front_left<=100) {
-      if(distance_front_right<=100) {
-        getSensorDistances();
-        moveMotors(GO_BACKWARD);
-        delay(100);
-      }
-      if(distance_front_left>60) {
-        getSensorDistances();
-        moveMotors(ROTATE_ON_LEFT_BWD);
-        delay(100);
-        moveMotors(GO_BACKWARD);
-        delay(100);
-        moveMotors(GO_FORWARD);
-        delay(50);
-        while (distance_side_left<FRONT_TRIG_SIDE_CTRL) {
-          getSensorDistances();
-          moveMotors(ROTATE_ON_RIGHT_BWD);
-          delay(100);
-          moveMotors(GO_BACKWARD);
-          delay(100);
-        }
-      }
-      else {
-        while (distance_front_left<40) {
-          getSensorDistances();
-          moveMotors(GO_BACKWARD);
-        }
-      }
-    }
+ 
+ /*Algo Code BEGIN*/
 
-    if(distance_front_left>=100 && distance_front_right>=100) {
-      int i = 0;
-      if(rand_number>40) {
-        while(i>=10) {
-          getSensorDistances();
-          moveMotors(GO_BACKWARD);
-          delay(20);
-          i++;
-        }
-      }
-      else if(rand_number<40 && rand_number<20) {
-        while(i>=10) {
-          getSensorDistances();
-          moveMotors(TURN_LEFT);
-          delay(20);
-          i++;
-        }
-      }
-      else if(rand_number<20 && rand_number<00) {
-        while(i>=10) {
-          getSensorDistances();
-          moveMotors(TURN_RIGHT);
-          delay(20);
-          i++;
-        }
-      }
-      moveMotors(GO_FORWARD);
-    }
-  }
-  */
+ /*Algo Code END*/
 }
 
-void getSensorDistances() {
-  distance_front_right = getDistance(sensorFrontRightTrig, sensorFrontRightEcho);
-  distance_front_left = getDistance(sensorFrontLeftTrig, sensorFrontLeftEcho);
-  distance_side_right = getDistance(sensorSideRightTrig, sensorSideRightEcho);
-  distance_side_left = getDistance(sensorSideLeftTrig, sensorSideLeftEcho);
-  distance_back = getDistance(sensorBackTrig, sensorBackEcho); 
+ /*Private Functions BEGIN*/
 
-  #if _DEBUGMODE
-    Serial.print("cm front right: ");
-    Serial.print(distance_front_right);
-    Serial.print("|   cm front left: ");
-    Serial.print(distance_front_left);
-    Serial.print("|   cm side right: ");
-    Serial.print(distance_side_right);
-    Serial.print("|   cm side left: ");
-    Serial.print(distance_side_left);
-    Serial.print("|   cm back: ");
-    Serial.println(distance_back);
-    Serial.print("Random number: ");
-    Serial.println(rand_number);
-  #endif
-
-  if(distance_front_right<CRICITAL_DISTANCE) {
-    moveMotors(ROTATE_ON_RIGHT_BWD);
-    delay(200);
-  }
-  if(distance_front_left<CRICITAL_DISTANCE) {
-    moveMotors(ROTATE_ON_LEFT_BWD);
-    delay(200);
-  }
-  if(distance_side_right<CRICITAL_DISTANCE) {
-    moveMotors(ROTATE_ON_RIGHT_FWD);
-    delay(200);
-  }
-  if(distance_side_left<CRICITAL_DISTANCE) {
-    moveMotors(ROTATE_ON_LEFT_FWD);
-    delay(200);
-  }
-  if(distance_back<CRICITAL_DISTANCE) {
-    moveMotors(GO_FORWARD);
-    delay(200);
-  }
-}
+ /*Private Functions END*/
