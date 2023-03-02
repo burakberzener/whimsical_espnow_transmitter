@@ -175,9 +175,11 @@ void loop() {
     Serial.print("Message Buffer: "); Serial.println(msg_command);
   }
  
- /*Algo Code BEGIN*/
+ if(msg_command == "start") {
+  /*Algo Code BEGIN*/
 
- /*Algo Code END*/
+  /*Algo Code END*/
+ }
 }
 
  /*Private Functions BEGIN*/
